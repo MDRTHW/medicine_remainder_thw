@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medicine_remainder_thw/constants.dart';
-import 'package:medicine_remainder_thw/pages/new_entry_file.dart';
+import 'package:medicine_remainder_thw/pages/new_entry/new_entry_file.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatelessWidget {
@@ -108,11 +109,75 @@ class BottomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'No Medicine Added',
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.headline3,
+    // return Center(
+    //   child: Text(
+    //     'No Medicine Added',
+    //     textAlign: TextAlign.center,
+    //     style: Theme.of(context).textTheme.headline3,
+    //   ),
+    // );
+
+    return GridView.builder(
+      padding: EdgeInsets.only(top: 1.h),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: 4,
+      itemBuilder: (context, index) {
+        return MedicineCard();
+      },
+    );
+  }
+}
+
+class MedicineCard extends StatelessWidget {
+  const MedicineCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      highlightColor: Colors.white,
+      splashColor: Colors.grey,
+      onTap: () {
+        //go to medicine details screen
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 1.h, bottom: 1.h),
+        margin: EdgeInsets.all(1.h),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(2.h),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            SvgPicture.asset(
+              'assets/icons/bottle.svg',
+              height: 7.h,
+              // color: kOtherColor,
+            ),
+            const Spacer(),
+            //hero tag animation later
+            Text(
+              'Calpol',
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            SizedBox(
+              height: 0.3.h,
+            ),
+            //time iterval data with condition
+            Text(
+              'Every 8 hours',
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ],
+        ),
       ),
     );
   }
