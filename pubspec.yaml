@@ -40,6 +40,7 @@ dependencies:
   flutter_svg:
   rxdart:
   provider:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

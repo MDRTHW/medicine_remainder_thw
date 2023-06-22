@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medicine_remainder_thw/constants.dart';
-import 'package:medicine_remainder_thw/pages/new_entry/new_entry_file.dart';
+import 'package:medicine_remainder_thw/pages/medicine_details/medicine_details.dart';
+import 'package:medicine_remainder_thw/pages/new_entry/new_entry_page.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatelessWidget {
@@ -138,8 +139,15 @@ class MedicineCard extends StatelessWidget {
     return InkWell(
       highlightColor: Colors.white,
       splashColor: Colors.grey,
+      borderRadius: BorderRadius.circular(2.h),
       onTap: () {
         //go to medicine details screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MedicineDetails(),
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsets.only(left: 2.w, right: 2.w, top: 1.h, bottom: 1.h),

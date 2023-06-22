@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medicine_remainder_thw/constants.dart';
+import 'package:medicine_remainder_thw/global_block.dart';
 import 'package:medicine_remainder_thw/pages/home_screen.dart';
 import 'package:medicine_remainder_thw/pages/new_entry/new_entry_block.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +20,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
-  NewEntryBlock? newEntryBlock;
+  GlobalBlock? globalBlock;
 
   @override
   void initState() {
-    newEntryBlock = NewEntryBlock();
+    globalBlock = GlobalBlock();
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<NewEntryBlock>.value(
-      value: newEntryBlock!,
+    return Provider<GlobalBlock>.value(
+      value: globalBlock!,
       child: Sizer(builder: (context, orientation, deviceType) {
         return MaterialApp(
           title: 'Medicine Reminder',
@@ -67,15 +68,25 @@ class _MyAppState extends State<MyApp> {
                 fontWeight: FontWeight.w800,
                 color: kTextColor,
               ),
+              headline5: TextStyle(
+                fontSize: 16.0.sp,
+                fontWeight: FontWeight.w900,
+                color: kTextColor,
+              ),
               headline6: GoogleFonts.poppins(
                   fontSize: 13.0.sp,
                   fontWeight: FontWeight.w600,
                   color: kTextColor,
                   letterSpacing: 1.0),
+              subtitle1: GoogleFonts.poppins(
+                fontSize: 15.0.sp,
+                fontWeight: FontWeight.w500,
+                color: kPrimaryColor,
+              ),
               subtitle2: GoogleFonts.poppins(
                 fontSize: 12.0.sp,
                 fontWeight: FontWeight.w500,
-                color: kTextColor,
+                color: kTextLightColor,
               ),
               caption: GoogleFonts.poppins(
                 fontSize: 9.0.sp,
