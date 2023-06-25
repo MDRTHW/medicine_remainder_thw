@@ -1,12 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medicine_remainder_thw/constants.dart';
 import 'package:medicine_remainder_thw/global_block.dart';
+import 'package:medicine_remainder_thw/models/errors.dart';
 import 'package:medicine_remainder_thw/pages/new_entry/new_entry_block.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/convert_time.dart';
+import '../../models/medicine.dart';
 import '../../models/medicine_type.dart';
 
 class NewEntryPage extends StatefulWidget {
@@ -172,6 +176,66 @@ class _NewEntryPageState extends State<NewEntryPage> {
                       //add medicine
                       //some validations
                       //go to success screen
+                      String? _medicineName;
+                      int? _dosage;
+                      if (_medicineNameController.text == '') {
+                        _newEntryBlock.submiteError(EntryError.nameNull);
+                        return;
+                      }
+                      if (_medicineNameController.text != '') {
+                        _medicineName = _medicineNameController.text;
+                      }
+
+                      if (_dosageController.text == '') {
+                        _dosage = 0;
+                      }
+                      if (_dosageController.text != '') {
+                        _dosage = int.parse(_dosageController.text);
+                      }
+
+                      for (var medicine in _globalBlock.medicineList$!.value) {
+                        if (medicine.medicineName == _medicineName) {
+                          _newEntryBlock.submiteError(EntryError.nameDuplicate);
+                          return;
+                        }
+                      }
+
+                      if (_newEntryBlock.selecedtinterval$!.value == 0) {
+                        _newEntryBlock.submiteError(EntryError.interval);
+                        return;
+                      }
+                      if (_newEntryBlock.selectedTimeOfDay$!.value == 'none') {
+                        _newEntryBlock.submiteError(EntryError.startTime);
+                        return;
+                      }
+                      String _medicineType = _newEntryBlock
+                          .selectedMedicineType$!.value
+                          .toString()
+                          .substring(13);
+                      int _interval =
+                          _newEntryBlock.selecedtinterval$!.value.toInt();
+                      String _startTime =
+                          _newEntryBlock.selectedTimeOfDay$!.value;
+                      List<int> intIDs =
+                          makeIDs(24 / _newEntryBlock.selecedtinterval$!.value);
+                      List<String> notificationIds =
+                          intIDs.map((i) => i.toString()).toList();
+                      // to be continue...
+                      Medicine _newEntryMedicine = Medicine(
+                        medicineName: _medicineName,
+                        dosage: _dosage,
+                        medicineType: _medicineType,
+                        interval: _interval,
+                        startTime: _startTime,
+                        notificationIds: notificationIds,
+                      );
+
+                      //update medicine list via global block
+                      _globalBlock.updateMedicineList(_newEntryMedicine);
+
+                      //schedule notification
+
+                      // got to success screen
                     },
                   ),
                 ),
@@ -181,6 +245,15 @@ class _NewEntryPageState extends State<NewEntryPage> {
         ),
       ),
     );
+  }
+
+  List<int> makeIDs(double n) {
+    var rng = Random();
+    List<int> ids = [];
+    for (int i = 0; i < n; i++) {
+      ids.add(rng.nextInt(1000000000));
+    }
+    return ids;
   }
 }
 

@@ -1,7 +1,7 @@
 class Medicine {
   final List<dynamic>? notificationIds;
   final String? medicineName;
-  final String? dosage;
+  final int? dosage;
   final String? medicineType;
   final String? startTime;
   final int? interval;
@@ -18,7 +18,7 @@ class Medicine {
   //getters
   List<dynamic>? get getNotificationIds => notificationIds!;
   String? get getMedicineName => medicineName!;
-  String? get getDosage => dosage!;
+  int? get getDosage => dosage!;
   String? get getMedicineType => medicineType!;
   String? get getStartTime => startTime!;
   int? get getInterval => interval!;

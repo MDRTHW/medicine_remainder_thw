@@ -15,6 +15,31 @@ class GlobalBlock {
     makeMedicineList();
   }
 
+  Future updateMedicineList(Medicine newMedicine) async {
+    var blockList = _medicineList$!.value;
+    blockList.add(newMedicine);
+    _medicineList$!.add(blockList);
+
+    Map<String, dynamic> tempMap = newMedicine.toJson();
+    SharedPreferences? sharedUser = await SharedPreferences.getInstance();
+    String newMedicineJson = jsonEncode(tempMap);
+    List<String> medicineJsonList = [];
+    if (sharedUser.getStringList('medicines') == null) {
+      medicineJsonList.add(newMedicineJson);
+      sharedUser.setStringList('medicines', medicineJsonList);
+    } else {
+      medicineJsonList = sharedUser.getStringList('medicines')!;
+      medicineJsonList.add(newMedicineJson);
+
+    }
+    else{
+      medicineJsonList = sharedUser.getStringList('medicines')!;
+      medicineJsonList.add(newMedicineJson);
+
+    }
+    sharedUser.setStringList('medicines', medicineJsonList);
+  }
+
   Future makeMedicineList() async {
     SharedPreferences? sharedUser = await SharedPreferences.getInstance();
     List<String>? jsonList = sharedUser.getStringList('medicines');
